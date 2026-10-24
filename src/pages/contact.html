@@ -1,0 +1,79 @@
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container page-hero-grid">
+        <div class="reveal">
+          <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / Contact</nav>
+          <p class="eyebrow">Contact / Get a proposal</p>
+          <h1 id="page-title">Tell Us About Your Business Goals</h1>
+          <p class="lead">Share a few details about your business and what you want to achieve. Digifyhub will review your enquiry and follow up using the contact details you provide.</p>
+          <a class="btn btn-primary btn-lg" href="#enquiry">Submit My Enquiry</a>
+        </div>
+        <div class="banner reveal">
+          <img src="assets/img/contact-banner.jpg" width="567" height="183" alt="Contact page concept for discussing a digital marketing enquiry.">
+        </div>
+      </div>
+    </section>
+
+    <section class="section form-section" id="enquiry" aria-labelledby="form-title">
+      <div class="container form-shell">
+        <div class="reveal light">
+          <p class="eyebrow">Request a proposal</p>
+          <h2 id="form-title">Let's grow together</h2>
+          <p>Whether you need SEO, Google or Meta Ads, social media, a new website or a complete lead generation plan, start here. The more you share about your goals, the more useful our first conversation will be.</p>
+          <h3 style="margin-top:28px">What happens next?</h3>
+          <ul class="check-list">
+            <li><strong>We review your enquiry</strong> and your current online presence.</li>
+            <li><strong>We get in touch</strong> to arrange a short, free consultation.</li>
+            <li><strong>You receive a clear proposal</strong> with recommended next steps.</li>
+          </ul>
+          <div class="contact-cards">
+            <a class="contact-card" href="{{phoneHref}}"><span class="ci ico-blue">{{phoneIcon}}</span><span><small>Call us</small><b>{{phone}}</b></span></a>
+            <a class="contact-card" href="mailto:{{email}}"><span class="ci ico-teal">{{mailIcon}}</span><span><small>Email us</small><b>{{email}}</b></span></a>
+            <a class="contact-card" href="{{whatsapp}}" target="_blank" rel="noopener"><span class="ci ci-wa"><svg viewBox="0 0 24 24" aria-hidden="true">{{waIcon}}</svg></span><span><small>WhatsApp</small><b>Chat with us on WhatsApp</b></span></a>
+          </div>
+        </div>
+        <div class="form-card reveal">
+          <h2 style="font-size:1.5rem">Your enquiry</h2>
+          <p class="muted" style="font-size:.9375rem">Fields marked * are required.</p>
+          {{leadForm}}
+        </div>
+      </div>
+    </section>
+
+    <!--
+      GOOGLE MAPS (enable once Digifyhub's public business address or service area is confirmed).
+      1. Google Maps → search the address → Share → Embed a map → copy the iframe src.
+      2. Replace PASTE_EMBED_URL and the address text below, then remove these comment markers.
+
+    <section class="section-tight section-alt" aria-labelledby="map-title">
+      <div class="container">
+        <h2 id="map-title" class="center">Find us</h2>
+        <p class="center">ADDRESS OR SERVICE AREA TEXT · <a href="https://maps.google.com/?q=ADDRESS" target="_blank" rel="noopener">Open in Google Maps</a></p>
+        <div class="media-frame">
+          <iframe title="Map showing Digifyhub business location" src="PASTE_EMBED_URL" width="100%" height="360" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <section class="section section-alt" aria-labelledby="contact-faq-title">
+      <div class="container narrow">
+        <div class="section-head reveal">
+          <h2 id="contact-faq-title">Before you get in touch</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details>
+            <summary>What information do you need for a proposal?</summary>
+            <div class="answer"><p>Your business name, what you sell, who your customers are and what you'd like to achieve. If you have a website, social profiles or past campaign data, share those too — they help us give more specific advice.</p></div>
+          </details>
+          <details>
+            <summary>Is the first consultation really free?</summary>
+            <div class="answer"><p>Yes. The first conversation is about understanding your goals and whether we're a good fit. There's no obligation to go ahead.</p></div>
+          </details>
+          <details>
+            <summary>How will you contact me?</summary>
+            <div class="answer"><p>We'll use the phone number or email you provide. If you prefer WhatsApp, mention it in your message.</p></div>
+          </details>
+        </div>
+        <p class="center" style="margin-top:28px"><a class="link-arrow" href="faq.html">See all FAQs</a></p>
+      </div>
+    </section>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  {{canonical}}
+  <meta name="theme-color" content="#061A40">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Digifyhub">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:image" content="{{ogImage}}">
+  {{ogUrl}}
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  {{jsonLd}}
+</head>
+<body class="{{bodyClass}}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  {{header}}
+  <main id="main">
+{{main}}
+  </main>
+  {{footer}}
+  <a class="wa-float" href="{{whatsapp}}" target="_blank" rel="noopener" aria-label="Chat with Digifyhub on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">{{waIcon}}</svg>
+  </a>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

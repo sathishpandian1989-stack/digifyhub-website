@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Digifyhub",
+  "slogan": "Dream Big. Start Smart. Grow Digitally.",
+  "description": "Digital marketing and business growth agency offering SEO, Google Ads, Meta Ads, social media marketing, website development and lead generation for small businesses and entrepreneurs.",
+  "telephone": "+918610458908",
+  "email": "{{email}}",
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=61595749499546",
+    "https://www.linkedin.com/company/143543114/"
+  ],
+  "knowsAbout": ["Search engine optimization", "Google Ads", "Meta Ads", "Social media marketing", "Website development", "Lead generation"]
+}

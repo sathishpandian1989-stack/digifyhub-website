@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What services does Digifyhub provide?", "acceptedAnswer": { "@type": "Answer", "text": "SEO and local SEO, Google Search Ads, Meta Ads for Facebook and Instagram, social media management and content planning, website and landing page development, and lead generation strategy with enquiry tracking." } },
+    { "@type": "Question", "name": "How do we get started?", "acceptedAnswer": { "@type": "Answer", "text": "Fill in the short enquiry form, call us or send a WhatsApp message. We arrange a free consultation, then send a clear proposal with recommended next steps, deliverables and costs." } },
+    { "@type": "Question", "name": "How soon can results appear?", "acceptedAnswer": { "@type": "Answer", "text": "Paid advertising can start bringing traffic soon after launch, while SEO usually builds over several months. Outcomes vary by industry, competition, budget and execution, and specific results are never guaranteed." } },
+    { "@type": "Question", "name": "What information is needed for a proposal?", "acceptedAnswer": { "@type": "Answer", "text": "Your business name, what you offer, your target customers, your goals and an idea of your budget, plus links to your website, social profiles and any past marketing data." } },
+    { "@type": "Question", "name": "Do you work with small businesses and startups?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Small businesses, startups and aspiring entrepreneurs are exactly who Digifyhub is built to help, with scope tailored to your stage and budget." } },
+    { "@type": "Question", "name": "How are campaign results reported?", "acceptedAnswer": { "@type": "Answer", "text": "Regular, plain-language reports covering work completed, key results such as enquiries, traffic and spend, and recommendations for the next period." } },
+    { "@type": "Question", "name": "How much does digital marketing cost?", "acceptedAnswer": { "@type": "Answer", "text": "Pricing depends on the services, scope and advertising budget. After a free consultation you receive a proposal with clear costs before anything starts." } },
+    { "@type": "Question", "name": "How do we communicate during a project?", "acceptedAnswer": { "@type": "Answer", "text": "By phone, email or WhatsApp, plus scheduled check-ins and reports." } }
+  ]
+}

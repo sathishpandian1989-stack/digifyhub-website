@@ -1,0 +1,52 @@
+{
+  "siteUrl": "",
+  "phone": "+91 8610458908",
+  "email": "sathishpandian1989@gmail.com",
+  "social": {
+    "facebook": "https://www.facebook.com/profile.php?id=61595749499546",
+    "linkedin": "https://www.linkedin.com/company/143543114/",
+    "instagram": "",
+    "whatsapp": "https://wa.me/918610458908"
+  },
+  "nav": [
+    { "label": "Home", "href": "index.html" },
+    { "label": "Services", "href": "services.html" },
+    { "label": "About", "href": "about.html" },
+    { "label": "Portfolio", "href": "portfolio.html" },
+    { "label": "Entrepreneur Hub", "href": "entrepreneur-hub.html" },
+    { "label": "Blog", "href": "blog.html" },
+    { "label": "FAQ", "href": "faq.html" }
+  ],
+  "pages": [
+    { "file": "index.html", "bodyClass": "page-home", "jsonLd": "schema/organization.json",
+      "title": "Digifyhub | Digital Marketing & Lead Generation",
+      "description": "Grow your business with Digifyhub digital marketing services, SEO, online advertising and lead generation for entrepreneurs and small businesses." },
+    { "file": "services.html",
+      "title": "Digital Marketing Services | Digifyhub",
+      "description": "Explore Digifyhub services including SEO, Google Ads, Meta Ads, social media marketing, website development and lead generation." },
+    { "file": "about.html",
+      "title": "About Digifyhub | Digital Growth Partner",
+      "description": "Learn about Digifyhub, a digital marketing partner helping business owners improve visibility, attract leads and grow online." },
+    { "file": "portfolio.html",
+      "title": "Digital Marketing Portfolio & Case Studies | Digifyhub",
+      "description": "Review Digifyhub project examples, marketing strategies and case studies across SEO, advertising, websites and lead generation." },
+    { "file": "entrepreneur-hub.html",
+      "title": "Entrepreneur Hub | Business Tips for Beginners | Digifyhub",
+      "description": "Find practical entrepreneurship tips, startup guidance and small business marketing ideas to help turn your business idea into action." },
+    { "file": "blog.html",
+      "title": "Digital Marketing Blog & Resources | Digifyhub",
+      "description": "Read practical digital marketing tips, SEO guides, advertising advice and entrepreneurship resources from Digifyhub." },
+    { "file": "contact.html",
+      "title": "Contact Digifyhub | Request a Marketing Proposal",
+      "description": "Contact Digifyhub to discuss SEO, digital advertising, social media marketing, website development or lead generation for your business." },
+    { "file": "faq.html", "jsonLd": "schema/faq.json",
+      "title": "FAQs | Digifyhub Digital Marketing Services",
+      "description": "Get answers about Digifyhub digital marketing services, onboarding, campaign reporting, timelines and proposals." },
+    { "file": "privacy-policy.html",
+      "title": "Privacy Policy | Digifyhub",
+      "description": "How Digifyhub collects, uses and protects the information you share through our website and enquiry form." },
+    { "file": "terms.html",
+      "title": "Terms of Use | Digifyhub",
+      "description": "The terms that apply when you use the Digifyhub website and its content." }
+  ]
+}

@@ -1,0 +1,63 @@
+<form class="lead-form" novalidate data-lead-form data-landing="{{landing}}">
+            <div class="form-grid">
+              <div class="field">
+                <label for="lf-name">Name <span aria-hidden="true">*</span></label>
+                <input id="lf-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="lf-name-err">
+                <p class="field-error" id="lf-name-err" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="lf-phone">Phone number <span aria-hidden="true">*</span></label>
+                <input id="lf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+91 98765 43210" required aria-describedby="lf-phone-err">
+                <p class="field-error" id="lf-phone-err" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="lf-email">Email address <span aria-hidden="true">*</span></label>
+                <input id="lf-email" name="email" type="email" autocomplete="email" maxlength="120" required aria-describedby="lf-email-err">
+                <p class="field-error" id="lf-email-err" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="lf-business">Business name <span aria-hidden="true">*</span></label>
+                <input id="lf-business" name="business" type="text" autocomplete="organization" maxlength="120" required aria-describedby="lf-business-err">
+                <p class="field-error" id="lf-business-err" aria-live="polite"></p>
+              </div>
+              <div class="field field-full">
+                <label for="lf-service">Service interested in</label>
+                <select id="lf-service" name="service" aria-describedby="lf-service-err">
+                  <option value="">Choose a service (optional)</option>
+                  <option>SEO</option>
+                  <option>Google Ads</option>
+                  <option>Meta Ads</option>
+                  <option>Social Media</option>
+                  <option>Website</option>
+                  <option>Lead Generation</option>
+                  <option>Other</option>
+                </select>
+                <p class="field-error" id="lf-service-err" aria-live="polite"></p>
+              </div>
+              <div class="field field-full">
+                <label for="lf-message">Message / goal <span class="optional">(optional)</span></label>
+                <textarea id="lf-message" name="message" rows="4" maxlength="1000" placeholder="What would you like to achieve in the next 3–6 months?" aria-describedby="lf-message-err lf-message-count"></textarea>
+                <p class="field-hint" id="lf-message-count">0 / 1000</p>
+                <p class="field-error" id="lf-message-err" aria-live="polite"></p>
+              </div>
+              <div class="hp" aria-hidden="true">
+                <label for="lf-website">Leave this field empty</label>
+                <input id="lf-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="field field-full consent">
+                <label class="check">
+                  <input type="checkbox" name="consent" required aria-describedby="lf-consent-err">
+                  <span>I agree that Digifyhub may use these details to respond to my enquiry, as described in the <a href="privacy-policy.html">Privacy Policy</a>. <span aria-hidden="true">*</span></span>
+                </label>
+                <p class="field-error" id="lf-consent-err" aria-live="polite"></p>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary btn-lg" type="submit">
+                <span class="btn-label">Submit My Enquiry</span>
+                <span class="spinner" aria-hidden="true"></span>
+              </button>
+              <p class="form-note">We reply using the details you provide. No spam, ever.</p>
+            </div>
+            <div class="form-status" role="status" aria-live="polite" tabindex="-1"></div>
+          </form>
