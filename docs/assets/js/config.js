@@ -1,12 +1,9 @@
 /*
  * Digifyhub site configuration.
- *
- * FORM_ENDPOINT: https://script.google.com/macros/s/AKfycbzI3Zt2uGT4wNtGLkUAsyaaQOuVnYltWFjzNB1VY_uURys2kkYp8TWdlcpDURduDJqF/exec
- * apps-script/Code.gs (Deploy → New deployment → Web app). It looks like:
- *   https://script.google.com/macros/s/AKfycb.../exec
- * The URL is a public endpoint, not a secret — the Google Sheet itself stays private.
+ * FORM_ENDPOINT is the Google Apps Script web app URL (ends in /exec).
+ * It is a public endpoint, not a secret. The Google Sheet itself stays private.
  */
 window.DIGIFYHUB_CONFIG = {
-  FORM_ENDPOINT: '',
+  FORM_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwg6Oc1MyRhtLWhFJMgzqAdsZEoMB-3keX2qmTQpSEiNCSW-yQafMsO0OyHsctIXwn4/exec',
   REQUEST_TIMEOUT_MS: 25000,
 };
