@@ -1,0 +1,11 @@
+Options -Indexes
+DirectoryIndex index.html
+RewriteEngine On
+
+# Block private files and folders
+RewriteRule ^(\.git|apps-script|src)(/|$) - [F,L]
+RewriteRule ^(build\.mjs|README\.md|\.gitignore)$ - [F,L]
+
+# Serve the website from the docs folder
+RewriteCond %{REQUEST_URI} !^/docs/
+RewriteRule ^(.*)$ /docs/$1 [L]
