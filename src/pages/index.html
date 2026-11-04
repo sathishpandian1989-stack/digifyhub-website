@@ -1,7 +1,8 @@
     <section class="hero" aria-labelledby="hero-title">
       <!-- Hero background video: place the supplied "01_Hero page Video.mp4" at docs/assets/video/hero.mp4 (muted, no audio). -->
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/hero-poster.webp" aria-hidden="true" tabindex="-1">
-        <source src="assets/video/hero.mp4" type="video/mp4">
+      <video class="hero-video" muted loop playsinline preload="none" poster="assets/img/hero-poster.webp" aria-hidden="true" tabindex="-1">
+        <!-- data-src: main.js starts the video after the page has loaded, so it doesn't slow the first paint -->
+        <source data-src="assets/video/hero.mp4" type="video/mp4">
       </video>
       <span class="hero-orb one" aria-hidden="true"></span>
       <span class="hero-orb two" aria-hidden="true"></span>
