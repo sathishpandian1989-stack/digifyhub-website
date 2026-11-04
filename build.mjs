@@ -1,6 +1,8 @@
 // Static site builder for Digifyhub — zero dependencies.
 // Usage: node build.mjs   (writes the finished pages into ./docs)
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -51,37 +53,152 @@ const shared = {
   year: String(new Date().getFullYear()),
 };
 
-for (const page of site.pages) {
+// Cache-busting: asset URLs change whenever the file content changes, so browsers can cache them for long.
+const version = (path) => createHash('md5').update(readFileSync(join(root, 'docs', path))).digest('hex').slice(0, 8);
+const assetVersions = {
+  cssVersion: version('assets/css/styles.css'),
+  jsVersion: version('assets/js/main.js'),
+  configVersion: version('assets/js/config.js'),
+};
+const fontsUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap';
+
+const pageUrl = (file) => abs(file === 'index.html' ? '' : file);
+const verification = [
+  site.googleSiteVerification && `<meta name="google-site-verification" content="${esc(site.googleSiteVerification)}">`,
+  site.bingSiteVerification && `<meta name="msvalidate.01" content="${esc(site.bingSiteVerification)}">`,
+].filter(Boolean).join('\n  ');
+const analytics = site.ga4Id
+  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.ga4Id)}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.ga4Id)}');</script>`
+  : '';
+
+// ---- Structured data (schema.org JSON-LD) ----
+const orgId = `${siteUrl}/#organization`;
+const websiteId = `${siteUrl}/#website`;
+const organization = {
+  '@type': 'Organization',
+  '@id': orgId,
+  name: 'Digifyhub',
+  url: `${siteUrl}/`,
+  logo: { '@type': 'ImageObject', url: abs('assets/img/logo.png'), width: 600, height: 171 },
+  image: abs('assets/img/og-image.jpg'),
+  slogan: 'Dream Big. Start Smart. Grow Digitally.',
+  description: 'Digital marketing and business growth agency offering SEO, Google Ads, Meta Ads, social media marketing, website development and lead generation for small businesses and entrepreneurs.',
+  email: site.email,
+  telephone: site.phone.replace(/\s/g, ''),
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: site.phone.replace(/\s/g, ''),
+    email: site.email,
+    availableLanguage: ['English'],
+  },
+  sameAs: Object.entries(site.social).filter(([k, v]) => v && k !== 'whatsapp').map(([, v]) => v),
+  knowsAbout: ['Search engine optimization', 'Local SEO', 'Google Ads', 'Meta Ads', 'Social media marketing', 'Website development', 'Lead generation'],
+};
+const website = { '@type': 'WebSite', '@id': websiteId, url: `${siteUrl}/`, name: 'Digifyhub', publisher: { '@id': orgId }, inLanguage: 'en-IN' };
+const pageTypes = { 'about.html': 'AboutPage', 'contact.html': 'ContactPage', 'faq.html': 'FAQPage', 'blog.html': 'CollectionPage' };
+const faqEntities = JSON.parse(read('schema/faq.json')).mainEntity;
+const services = JSON.parse(read('schema/services.json'));
+
+function structuredData(page) {
+  const url = pageUrl(page.file);
+  const webPage = {
+    '@type': pageTypes[page.file] || 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: page.title,
+    description: page.description,
+    isPartOf: { '@id': websiteId },
+    inLanguage: 'en-IN',
+  };
+  const graph = [webPage];
+  if (page.file === 'index.html') {
+    webPage.about = { '@id': orgId };
+    graph.push(organization, website);
+  } else {
+    webPage.breadcrumb = { '@id': `${url}#breadcrumb` };
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: page.name, item: url },
+      ],
+    });
+  }
+  if (page.file === 'faq.html') webPage.mainEntity = faqEntities;
+  if (page.file === 'services.html') {
+    for (const sv of services) {
+      graph.push({ '@type': 'Service', '@id': `${url}#${sv.id}`, name: sv.name, serviceType: sv.serviceType, description: sv.description, url: `${url}#${sv.id}`, provider: { '@id': orgId } });
+    }
+  }
+  return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })}</script>`;
+}
+
+// lastmod = date of the last commit that touched the page source (today if it has uncommitted changes)
+const today = new Date().toISOString().slice(0, 10);
+function lastModified(file) {
+  try {
+    const src = `src/pages/${file}`;
+    if (execFileSync('git', ['status', '--porcelain', src], { cwd: root }).toString().trim()) return today;
+    return execFileSync('git', ['log', '-1', '--format=%cs', '--', src], { cwd: root }).toString().trim() || today;
+  } catch {
+    return today;
+  }
+}
+
+function renderPage(page, extra = {}) {
   const navLinks = site.nav
-    .map((n) => `<li><a href="${n.href}"${n.href === page.file ? ' aria-current="page"' : ''}>${n.label}</a></li>`)
+    .map((n) => `<li><a href="${n.href}"${n.href === page.file || (n.href === './' && page.file === 'index.html') ? ' aria-current="page"' : ''}>${n.label}</a></li>`)
     .join('');
   const vars = { ...shared, navLinks, landing: page.file };
   let body = read(`pages/${page.file}`);
   body = body.replace('{{leadForm}}', fill(leadForm, vars)).replace('{{cta}}', fill(cta, vars));
-  const jsonLd = page.jsonLd && existsSync(join(root, 'src', page.jsonLd)) ? `<script type="application/ld+json">${fill(read(page.jsonLd), vars).trim()}</script>` : '';
-  const html = fill(layout, {
+  return fill(layout, {
     ...vars,
+    ...assetVersions,
+    fontsUrl,
     title: esc(page.title),
     description: esc(page.description),
-    canonical: siteUrl ? `<link rel="canonical" href="${abs(page.file === 'index.html' ? '' : page.file)}">` : '',
-    ogUrl: siteUrl ? `<meta property="og:url" content="${abs(page.file === 'index.html' ? '' : page.file)}">` : '',
+    robots: page.robots || 'index, follow, max-image-preview:large, max-snippet:-1',
+    canonical: siteUrl && !extra.noCanonical ? `<link rel="canonical" href="${pageUrl(page.file)}">` : '',
+    ogUrl: siteUrl && !extra.noCanonical ? `<meta property="og:url" content="${pageUrl(page.file)}">` : '',
     ogImage: abs('assets/img/og-image.jpg'),
-    jsonLd,
+    preload: page.preload ? `<link rel="preload" as="image" href="${page.preload}" fetchpriority="high">` : '',
+    verification,
+    analytics,
+    jsonLd: siteUrl && !extra.noCanonical ? structuredData(page) : '',
     header: fill(header, vars),
     footer: fill(footer, vars),
     main: fill(body, vars),
     bodyClass: page.bodyClass || '',
   });
-  writeFileSync(join(root, 'docs', page.file), html);
+}
+
+for (const page of site.pages) {
+  writeFileSync(join(root, 'docs', page.file), renderPage(page));
   console.log('built', page.file);
 }
 
+// 404 page: not indexed, and <base href="/"> so its assets load from any missing URL depth.
+const notFound = { file: '404.html', name: 'Page not found', title: 'Page Not Found | Digifyhub', description: 'The page you were looking for could not be found.', robots: 'noindex, follow' };
+writeFileSync(join(root, 'docs/404.html'), renderPage(notFound, { noCanonical: true }).replace('<meta charset="utf-8">', '<meta charset="utf-8">\n  <base href="/">'));
+console.log('built 404.html');
+
+writeFileSync(join(root, 'docs/site.webmanifest'), JSON.stringify({
+  name: 'Digifyhub', short_name: 'Digifyhub', start_url: '/', display: 'browser',
+  background_color: '#061A40', theme_color: '#061A40',
+  icons: [
+    { src: '/assets/img/icon-192.png', sizes: '192x192', type: 'image/png' },
+    { src: '/assets/img/icon-512.png', sizes: '512x512', type: 'image/png' },
+  ],
+}, null, 2) + '\n');
+
 // robots.txt + sitemap.xml (sitemap needs the public URL, set siteUrl in src/site.json)
-writeFileSync(join(root, 'docs/robots.txt'), `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${siteUrl}/sitemap.xml\n` : ''}`);
+writeFileSync(join(root, 'docs/robots.txt'), `User-agent: *\nAllow: /\n${siteUrl ? `\nSitemap: ${siteUrl}/sitemap.xml\n` : ''}`);
 if (siteUrl) {
-  const today = new Date().toISOString().slice(0, 10);
   const urls = site.pages
-    .map((p) => `  <url><loc>${abs(p.file === 'index.html' ? '' : p.file)}</loc><lastmod>${today}</lastmod></url>`)
+    .map((p) => `  <url><loc>${pageUrl(p.file)}</loc><lastmod>${lastModified(p.file)}</lastmod></url>`)
     .join('\n');
   writeFileSync(join(root, 'docs/sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   console.log('built sitemap.xml');

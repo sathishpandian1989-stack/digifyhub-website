@@ -40,6 +40,10 @@ CSS, JS and images are edited directly in `docs/assets/`.
 3. Your site goes live at `https://<username>.github.io/<repo>/` (or on your custom domain).
 4. Put that public URL in `src/site.json` → `"siteUrl"`, then run `node build.mjs` and push again. This adds canonical URLs, `og:url` and `sitemap.xml`. Submit the sitemap in Google Search Console.
 
+## SEO
+
+See **[SEO.md](SEO.md)** for the keyword map, what's implemented, and the Search Console / Analytics setup checklist.
+
 ## Connecting the lead form
 
 Follow **[apps-script/README.md](apps-script/README.md)**. Then paste the Web App URL into `docs/assets/js/config.js`. Until you do, the form tells visitors it couldn't send their enquiry and shows the phone, email and WhatsApp contacts instead. It never pretends a lead was saved.
@@ -54,4 +58,4 @@ Follow **[apps-script/README.md](apps-script/README.md)**. Then paste the Web Ap
 - [ ] **Case studies:** the portfolio shows clearly labelled *demo* approaches only. Add real projects with verified results as they're completed.
 - [ ] **Blog:** article cards are marked "Coming soon". Link them as posts are published.
 - [ ] **Legal:** review the Privacy Policy and Terms for your jurisdiction.
-- [ ] **Analytics:** add a GA4 tag to `src/layout.html` if wanted. The form already fires a `generate_lead` event when `gtag` is present.
+- [ ] **Analytics:** put your GA4 Measurement ID in `src/site.json` → `ga4Id` and rebuild. The form already fires a `generate_lead` event.
