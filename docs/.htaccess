@@ -5,7 +5,9 @@
 
 Options -Indexes
 DirectoryIndex index.html
-ErrorDocument 404 /404.html
+# The 404 page is set in the root .htaccess (ErrorDocument 404 /docs/404.html).
+# If only this folder is ever uploaded to public_html, add here instead:
+#   ErrorDocument 404 /404.html
 AddDefaultCharset utf-8
 
 <IfModule mod_mime.c>
