@@ -12,6 +12,34 @@
     } catch (e) { /* tracking must never break the page */ }
   }
 
+  /* ---------- Real-visitor speed tracking (Core Web Vitals -> GA4) ---------- */
+  // Loaded only after the page has finished loading, and only when GA4 is installed.
+  function reportWebVitals() {
+    if (typeof window.gtag !== 'function') return;
+    var script = document.createElement('script');
+    script.src = 'assets/js/vendor/web-vitals-6.2.3.js';
+    script.async = true;
+    script.onload = function () {
+      var wv = window.webVitals;
+      if (!wv) return;
+      var send = function (metric) {
+        window.gtag('event', metric.name, {
+          // GA4 sums event values; CLS is a small decimal, so it is scaled up to keep precision.
+          value: Math.round(metric.name === 'CLS' ? metric.delta * 1000 : metric.delta),
+          metric_id: metric.id,
+          metric_value: metric.value,
+          metric_rating: metric.rating, // good | needs-improvement | poor
+          page_path: location.pathname,
+          non_interaction: true,
+        });
+      };
+      ['onLCP', 'onINP', 'onCLS', 'onFCP', 'onTTFB'].forEach(function (fn) { if (wv[fn]) wv[fn](send); });
+    };
+    document.head.appendChild(script);
+  }
+  if (document.readyState === 'complete') reportWebVitals();
+  else window.addEventListener('load', reportWebVitals);
+
   // Taps on WhatsApp, phone or email links count as a "Contact".
   document.addEventListener('click', function (e) {
     var link = e.target.closest && e.target.closest('a[href]');
