@@ -67,8 +67,15 @@ const verification = [
   site.googleSiteVerification && `<meta name="google-site-verification" content="${esc(site.googleSiteVerification)}">`,
   site.bingSiteVerification && `<meta name="msvalidate.01" content="${esc(site.bingSiteVerification)}">`,
 ].filter(Boolean).join('\n  ');
-const analytics = site.ga4Id
-  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.ga4Id)}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.ga4Id)}');</script>`
+const pixelId = String(site.metaPixelId || '').replace(/\D/g, '');
+const analytics = [
+  site.ga4Id &&
+    `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.ga4Id)}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.ga4Id)}');</script>`,
+  pixelId &&
+    `<!-- Meta Pixel -->\n  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');</script>`,
+].filter(Boolean).join('\n  ');
+const bodyStart = pixelId
+  ? `<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${pixelId}&amp;ev=PageView&amp;noscript=1"></noscript>`
   : '';
 
 // ---- Structured data (schema.org JSON-LD) ----
@@ -167,6 +174,7 @@ function renderPage(page, extra = {}) {
     preload: page.preload ? `<link rel="preload" as="image" href="${page.preload}" fetchpriority="high">` : '',
     verification,
     analytics,
+    bodyStart,
     jsonLd: siteUrl && !extra.noCanonical ? structuredData(page) : '',
     header: fill(header, vars),
     footer: fill(footer, vars),

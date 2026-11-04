@@ -4,6 +4,23 @@
   document.documentElement.classList.add('js');
   var config = window.DIGIFYHUB_CONFIG || {};
 
+  /* ---------- Conversion tracking (Meta Pixel / GA4 when they are installed) ---------- */
+  function track(metaEvent, gaEvent, params, eventId) {
+    try {
+      if (typeof window.fbq === 'function') window.fbq('track', metaEvent, params || {}, eventId ? { eventID: eventId } : undefined);
+      if (typeof window.gtag === 'function') window.gtag('event', gaEvent, params || {});
+    } catch (e) { /* tracking must never break the page */ }
+  }
+
+  // Taps on WhatsApp, phone or email links count as a "Contact".
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    var method = /^https:\/\/wa\.me\//.test(href) ? 'whatsapp' : /^tel:/.test(href) ? 'phone' : /^mailto:/.test(href) ? 'email' : '';
+    if (method) track('Contact', 'contact_click', { method: method });
+  });
+
   /* ---------- Header: scrolled state + mobile menu ---------- */
   var header = document.querySelector('.site-header');
   var toggle = document.querySelector('.nav-toggle');
@@ -257,7 +274,9 @@
     });
 
     function onSuccess(res) {
-      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_location: form.dataset.landing });
+      // Fires only after the backend confirms the lead was saved; the Lead ID lets Meta de-duplicate
+      // this event if the Conversions API is added later.
+      if (!res.duplicate) track('Lead', 'generate_lead', { form_location: form.dataset.landing, content_name: readData().service || 'Enquiry' }, res.leadId);
       var name = escapeHtml(readData().name.split(' ')[0] || 'there');
       var wrap = form.parentNode;
       var box = document.createElement('div');
