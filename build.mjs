@@ -68,11 +68,20 @@ const verification = [
   site.bingSiteVerification && `<meta name="msvalidate.01" content="${esc(site.bingSiteVerification)}">`,
 ].filter(Boolean).join('\n  ');
 const pixelId = String(site.metaPixelId || '').replace(/\D/g, '');
+// Tracking tags are set up immediately (so events queue from the first moment) but their heavy
+// third-party scripts load only after the first scroll/tap/keypress, or 4s after the page has
+// loaded, so they don't compete with the page's own loading.
+const thirdPartyScripts = [
+  site.ga4Id && `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(site.ga4Id)}`,
+  pixelId && 'https://connect.facebook.net/en_US/fbevents.js',
+].filter(Boolean);
 const analytics = [
   site.ga4Id &&
-    `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.ga4Id)}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.ga4Id)}');</script>`,
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.ga4Id)}');</script>`,
   pixelId &&
-    `<!-- Meta Pixel -->\n  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');</script>`,
+    `<!-- Meta Pixel (queue only; fbevents.js is loaded by the delayed loader below) -->\n  <script>!function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);fbq('init','${pixelId}');fbq('track','PageView');</script>`,
+  thirdPartyScripts.length &&
+    `<script>(function(){var done=false,ev=['pointerdown','keydown','touchstart','scroll'];function load(){if(done)return;done=true;ev.forEach(function(e){removeEventListener(e,load,true)});${JSON.stringify(thirdPartyScripts)}.forEach(function(u){var s=document.createElement('script');s.async=true;s.src=u;document.head.appendChild(s)})}ev.forEach(function(e){addEventListener(e,load,{capture:true,passive:true})});addEventListener('load',function(){setTimeout(load,4000)})})();</script>`,
 ].filter(Boolean).join('\n  ');
 const bodyStart = pixelId
   ? `<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=${pixelId}&amp;ev=PageView&amp;noscript=1"></noscript>`

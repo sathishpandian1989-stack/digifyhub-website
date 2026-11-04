@@ -91,14 +91,28 @@
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---------- Hero video: drop it if the file is missing or blocked ---------- */
+  /* ---------- Hero video: start after the page has loaded; drop it if missing or blocked ---------- */
   var video = document.querySelector('.hero-video');
   if (video) {
     var source = video.querySelector('source');
     var dropVideo = function () { video.remove(); };
-    if (source) source.addEventListener('error', dropVideo);
-    video.addEventListener('error', dropVideo);
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) video.pause();
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    var startVideo = function () {
+      if (!source || !source.dataset.src) return;
+      // Listen for errors only now: before a src is set the browser reports the empty <source> as an error.
+      source.addEventListener('error', dropVideo);
+      video.addEventListener('error', dropVideo);
+      source.src = source.dataset.src;
+      video.load();
+      var playing = video.play();
+      if (playing && playing.catch) playing.catch(function () { /* autoplay blocked: the poster stays */ });
+    };
+    // Visitors who prefer reduced motion or have Data Saver on keep the still poster image.
+    if (!reduceMotion && !saveData) {
+      if (document.readyState === 'complete') startVideo();
+      else window.addEventListener('load', startVideo);
+    }
   }
 
   /* ---------- Blog category filter ---------- */
