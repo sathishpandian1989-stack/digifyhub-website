@@ -1,24 +1,41 @@
-# Digifyhub — Hostinger (LiteSpeed/Apache) configuration
-# Upload this file together with the site into public_html.
+# Digifyhub — website folder. Works both when the whole repository is deployed
+# (root .htaccess serves this folder) and when only this folder's contents are
+# uploaded to public_html. Rules use %{THE_REQUEST} (the URL the visitor asked
+# for) so internal rewrites can never cause redirect loops.
 
 Options -Indexes
 DirectoryIndex index.html
+ErrorDocument 404 /404.html
+AddDefaultCharset utf-8
 
-# --- Force HTTPS and the bare domain (https://digifyhub.tech) ---------------
-# Enable the free SSL certificate in hPanel first, otherwise this redirect
-# will point visitors to a page without a valid certificate.
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} ^www\. [NC]
-  RewriteRule ^ https://digifyhub.tech%{REQUEST_URI} [L,R=301]
-
-  # Keep the old /index.html URL pointing at the homepage
-  RewriteRule ^index\.html$ / [L,R=301]
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType application/manifest+json .webmanifest
+  AddType video/mp4 .mp4
 </IfModule>
 
-# --- Friendly 404: send unknown pages to the homepage ------------------------
-ErrorDocument 404 /index.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # One canonical host: https://digifyhub.tech (no http, no www)
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteCond %{THE_REQUEST} \s(/[^\s]*)
+  RewriteRule ^ https://digifyhub.tech%1 [L,R=301]
+
+  # /index.html and /docs/... are duplicates of the clean URLs
+  RewriteCond %{THE_REQUEST} \s/+(docs/)?index\.html[\s?] [NC]
+  RewriteRule ^ / [L,R=301]
+  RewriteCond %{THE_REQUEST} \s/+docs/([^\s?]*) [NC]
+  RewriteRule ^ /%1 [L,R=301]
+</IfModule>
+
+# The 404 page must not be indexed even if requested directly
+<Files "404.html">
+  <IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, follow"
+  </IfModule>
+</Files>
 
 # --- Security headers ---------------------------------------------------------
 <IfModule mod_headers.c>
@@ -31,26 +48,33 @@ ErrorDocument 404 /index.html
 
 # --- Compression --------------------------------------------------------------
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml text/plain application/xml
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json application/manifest+json image/svg+xml text/plain application/xml text/xml
 </IfModule>
 
 # --- Browser caching ------------------------------------------------------------
-# HTML and config.js are short-lived so content and the form endpoint update quickly.
+# CSS/JS URLs carry a ?v= content hash (see build.mjs), so they can be cached for a year.
+# HTML is always revalidated so content changes show up immediately.
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault "access plus 1 week"
   ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType text/css "access plus 1 week"
-  ExpiresByType application/javascript "access plus 1 week"
-  ExpiresByType image/webp "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/svg+xml "access plus 1 month"
-  ExpiresByType image/x-icon "access plus 1 month"
-  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType video/mp4 "access plus 6 months"
+  ExpiresByType application/xml "access plus 1 day"
+  ExpiresByType text/xml "access plus 1 day"
+  ExpiresByType text/plain "access plus 1 day"
 </IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "config\.js$">
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>

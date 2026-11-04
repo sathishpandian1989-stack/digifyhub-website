@@ -9,44 +9,100 @@
     "whatsapp": "https://wa.me/918610458908"
   },
   "nav": [
-    { "label": "Home", "href": "index.html" },
-    { "label": "Services", "href": "services.html" },
-    { "label": "About", "href": "about.html" },
-    { "label": "Portfolio", "href": "portfolio.html" },
-    { "label": "Entrepreneur Hub", "href": "entrepreneur-hub.html" },
-    { "label": "Blog", "href": "blog.html" },
-    { "label": "FAQ", "href": "faq.html" }
+    {
+      "label": "Home",
+      "href": "./"
+    },
+    {
+      "label": "Services",
+      "href": "services.html"
+    },
+    {
+      "label": "About",
+      "href": "about.html"
+    },
+    {
+      "label": "Portfolio",
+      "href": "portfolio.html"
+    },
+    {
+      "label": "Entrepreneur Hub",
+      "href": "entrepreneur-hub.html"
+    },
+    {
+      "label": "Blog",
+      "href": "blog.html"
+    },
+    {
+      "label": "FAQ",
+      "href": "faq.html"
+    }
   ],
   "pages": [
-    { "file": "index.html", "bodyClass": "page-home", "jsonLd": "schema/organization.json",
-      "title": "Digifyhub | Digital Marketing & Lead Generation",
-      "description": "Grow your business with Digifyhub digital marketing services, SEO, online advertising and lead generation for entrepreneurs and small businesses." },
-    { "file": "services.html",
-      "title": "Digital Marketing Services | Digifyhub",
-      "description": "Explore Digifyhub services including SEO, Google Ads, Meta Ads, social media marketing, website development and lead generation." },
-    { "file": "about.html",
-      "title": "About Digifyhub | Digital Growth Partner",
-      "description": "Learn about Digifyhub, a digital marketing partner helping business owners improve visibility, attract leads and grow online." },
-    { "file": "portfolio.html",
+    {
+      "file": "index.html",
+      "bodyClass": "page-home",
+      "title": "Digital Marketing Agency for Small Businesses | Digifyhub",
+      "description": "Digifyhub is a digital marketing agency helping small businesses and entrepreneurs grow with SEO, Google Ads, Meta Ads, websites and lead generation services.",
+      "name": "Home",
+      "preload": "assets/img/hero-poster.webp"
+    },
+    {
+      "file": "services.html",
+      "title": "Digital Marketing Services: SEO, Ads & Websites | Digifyhub",
+      "description": "Explore Digifyhub's digital marketing services: SEO and local SEO, Google Ads and Meta Ads management, social media marketing, websites and lead generation.",
+      "name": "Services"
+    },
+    {
+      "file": "about.html",
+      "title": "About Digifyhub | Your Digital Marketing Growth Partner",
+      "description": "Learn about Digifyhub, a digital marketing partner helping business owners and entrepreneurs improve online visibility, attract leads and grow with clarity.",
+      "name": "About Us"
+    },
+    {
+      "file": "portfolio.html",
       "title": "Digital Marketing Portfolio & Case Studies | Digifyhub",
-      "description": "Review Digifyhub project examples, marketing strategies and case studies across SEO, advertising, websites and lead generation." },
-    { "file": "entrepreneur-hub.html",
+      "description": "See how Digifyhub plans and documents digital marketing projects across SEO, Google Ads, Meta Ads, websites and lead generation, with verified results only.",
+      "name": "Portfolio"
+    },
+    {
+      "file": "entrepreneur-hub.html",
       "title": "Entrepreneur Hub | Business Tips for Beginners | Digifyhub",
-      "description": "Find practical entrepreneurship tips, startup guidance and small business marketing ideas to help turn your business idea into action." },
-    { "file": "blog.html",
-      "title": "Digital Marketing Blog & Resources | Digifyhub",
-      "description": "Read practical digital marketing tips, SEO guides, advertising advice and entrepreneurship resources from Digifyhub." },
-    { "file": "contact.html",
-      "title": "Contact Digifyhub | Request a Marketing Proposal",
-      "description": "Contact Digifyhub to discuss SEO, digital advertising, social media marketing, website development or lead generation for your business." },
-    { "file": "faq.html", "jsonLd": "schema/faq.json",
-      "title": "FAQs | Digifyhub Digital Marketing Services",
-      "description": "Get answers about Digifyhub digital marketing services, onboarding, campaign reporting, timelines and proposals." },
-    { "file": "privacy-policy.html",
+      "description": "Entrepreneurship tips for beginners: validate your business idea, plan your launch, find your first customers and build an online presence on a budget.",
+      "name": "Entrepreneur Hub"
+    },
+    {
+      "file": "blog.html",
+      "title": "Digital Marketing Blog: SEO, Ads & Growth Tips | Digifyhub",
+      "description": "Practical digital marketing tips from Digifyhub: SEO for small businesses, Google Ads and Meta Ads guides, social media advice and business growth strategies.",
+      "name": "Blog & Resources"
+    },
+    {
+      "file": "contact.html",
+      "title": "Contact Digifyhub | Request a Free Marketing Consultation",
+      "description": "Contact Digifyhub to discuss SEO, Google Ads, Meta Ads, social media, website development or lead generation. Request a free consultation and proposal today.",
+      "name": "Contact"
+    },
+    {
+      "file": "faq.html",
+      "title": "Digital Marketing FAQs: Results & Pricing | Digifyhub",
+      "description": "Answers to common questions about Digifyhub's digital marketing services: getting started, how soon results appear, pricing, proposals and campaign reporting.",
+      "name": "FAQ"
+    },
+    {
+      "file": "privacy-policy.html",
       "title": "Privacy Policy | Digifyhub",
-      "description": "How Digifyhub collects, uses and protects the information you share through our website and enquiry form." },
-    { "file": "terms.html",
+      "description": "How Digifyhub collects, uses, stores and protects the information you share through our website enquiry form, and how to access, correct or delete your data.",
+      "name": "Privacy Policy"
+    },
+    {
+      "file": "terms.html",
       "title": "Terms of Use | Digifyhub",
-      "description": "The terms that apply when you use the Digifyhub website and its content." }
-  ]
+      "description": "The terms that apply when you use the Digifyhub website, including how you may use our content, how enquiries work and our honest approach to marketing results.",
+      "name": "Terms of Use"
+    }
+  ],
+  "ga4Id": "",
+  "googleSiteVerification": "",
+  "bingSiteVerification": ""
 }

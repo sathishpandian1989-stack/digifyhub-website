@@ -1,0 +1,14 @@
+[
+  { "id": "seo", "name": "SEO and Local SEO", "serviceType": "Search engine optimization",
+    "description": "Keyword research, on-page and technical SEO, Google Business Profile optimisation and local citations, with monthly ranking and traffic reports." },
+  { "id": "google-ads", "name": "Google Ads Management", "serviceType": "Pay-per-click advertising",
+    "description": "Google Search Ads setup and management: conversion tracking, keyword strategy, ad copy, budget and bid management, and performance reporting." },
+  { "id": "meta-ads", "name": "Meta Ads Management", "serviceType": "Social media advertising",
+    "description": "Facebook and Instagram advertising: audience targeting, campaign structure, creative guidance, pixel setup, lead campaigns and retargeting." },
+  { "id": "social-media", "name": "Social Media Marketing", "serviceType": "Social media management",
+    "description": "Content strategy and monthly calendars, post design and captions, profile optimisation, scheduling and engagement reports." },
+  { "id": "websites", "name": "Website and Landing Page Development", "serviceType": "Web design and development",
+    "description": "Responsive, conversion-focused websites and landing pages with enquiry forms, WhatsApp integration, SEO basics and analytics." },
+  { "id": "lead-generation", "name": "Lead Generation Services", "serviceType": "Lead generation",
+    "description": "Customer journey mapping, offers and calls to action, lead capture forms connected to Google Sheets, instant lead alerts and source tracking." }
+]

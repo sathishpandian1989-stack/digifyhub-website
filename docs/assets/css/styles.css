@@ -62,8 +62,8 @@ body {
 }
 img, video, svg { display: block; max-width: 100%; }
 img { height: auto; }
-a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--blue-600); }
+a { color: var(--blue-600); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: #0b47b8; }
 h1, h2, h3, h4 { font-family: var(--font-head); color: var(--ink); line-height: 1.15; margin: 0 0 .6em; letter-spacing: -.02em; }
 h1 { font-size: clamp(2.25rem, 5.4vw, 4rem); font-weight: 800; }
 h2 { font-size: clamp(1.75rem, 3.4vw, 2.6rem); font-weight: 800; }
@@ -274,7 +274,7 @@ a.card, .card-link { text-decoration: none; color: inherit; }
 .audience-card { overflow: hidden; padding: 0; }
 .audience-card .top { padding: 28px 28px 0; }
 .audience-card .msg { margin: 18px 28px 28px; padding: 14px 16px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-weight: 600; font-size: .9375rem; border-left: 4px solid var(--teal); }
-.tag { align-self: flex-start; display: inline-block; font: 600 .75rem/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; padding: 7px 10px; border-radius: 999px; background: var(--surface-3); color: var(--blue); margin-bottom: 14px; }
+.tag { align-self: flex-start; display: inline-block; font: 600 .75rem/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; padding: 7px 10px; border-radius: 999px; background: var(--surface-3); color: #0d4fc9; margin-bottom: 14px; }
 .tag-amber { background: #fff4d6; color: #8a5a00; }
 .tag-teal { background: #dbf7ef; color: #0b7a61; }
 
@@ -549,10 +549,18 @@ a.card, .card-link { text-decoration: none; color: inherit; }
 /* eyebrow colour inside section heads (overrides .section-head p) */
 .section-head .eyebrow { color: var(--blue); }
 .section-dark .section-head .eyebrow { color: var(--cyan-300); }
-.card .link-arrow { color: var(--blue); }
+.card .link-arrow { color: var(--blue-600); }
 .post-card .meta .link-arrow { margin-top: 0; }
 .post-card .meta a { text-decoration: none; font-weight: 600; }
 .section-dark + .cta-band, .page-hero + .cta-band { padding-top: clamp(64px, 9vw, 112px); }
 a.pill { text-decoration: none; transition: border-color .2s, color .2s; }
 a.pill:hover { border-color: var(--blue); color: var(--blue); }
 @media (max-width: 640px) { .post-card .thumb { aspect-ratio: 16 / 7; } }
+
+/* Keyword kicker inside H1s: looks like the eyebrow label, read by search engines as part of the heading */
+h1 > .eyebrow { display: flex; width: fit-content; letter-spacing: .12em; line-height: 1.3; }
+.hero h1 > .eyebrow { margin-bottom: 18px; }
+.page-hero .center h1 > .eyebrow { margin-left: auto; margin-right: auto; }
+/* footer secondary text: meets WCAG AA contrast on the dark background */
+.site-footer .muted { color: #9fb1cf; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
